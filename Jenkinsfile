@@ -2,7 +2,7 @@ pipeline {
   agent any
   triggers {
   pollSCM('H/5 * * * *')
- } 
+  } 
   stages {
      
      stage("code-fetch-git") {
@@ -19,6 +19,18 @@ pipeline {
            docker build -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
            '''   
              }
+     }
+     stage('login & push to hub') {
+        steps {
+         script {
+          docker.withRegistry('https://index.docker.io/v1/','dockerhub-cred-id') { 
+             
+           def image = docker.image('shrikant155/python-web-app:${BUILD_NUMBER}')
+           image.push()
+           image.push('latest')
+           }         
+         }
+        }
      }
 }          
 post {
