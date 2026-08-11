@@ -38,7 +38,7 @@ pipeline {
        steps {
         sh '''
            docker rmi -f shrikant155/python-web-app || true 
-           docker build -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
+           docker build --no-cache-dir -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
            '''   
              }
      }
