@@ -26,7 +26,7 @@ post {
    echo ' buildand fetch success'
   }
   failure {
-   echo "somthing is failed'
+   echo 'somthing is failed'
   }
   always {
    sh 'docker system prune -f'
