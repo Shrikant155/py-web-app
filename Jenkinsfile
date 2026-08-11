@@ -41,6 +41,13 @@ pipeline {
            docker build -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
            '''   
              }
+     }
+     stage("trivy scan ") {
+      steps {
+        sh 'trivy image --severity HIGH, CRITICAL --exit-code 1 shrikant155/python-web-app:latest'
+
+      }
+
      } 
 
      stage("login & push to hub") {
