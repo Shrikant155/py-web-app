@@ -23,7 +23,7 @@ pipeline {
           
 post {
   success {
-   echo ' buildand fetch success"
+   echo ' buildand fetch success'
   }
   failure {
    echo "somthing is failed'
