@@ -39,7 +39,7 @@ def register():
         cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
         conn.commit()
         conn.close()
-        flash('User registered successfully!', 'success')
+        flash('User registered successfully! Stored in database ', 'success')
     except sqlite3.IntegrityError:
         flash('Username already exists!', 'error')
         
