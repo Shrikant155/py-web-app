@@ -19,11 +19,23 @@ pipeline {
            docker build -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
            '''   
              }
+     } 
+     
+     stage("sast-scan"){
+       steps {
+        script {
+         withSonarQubeEnv("shrikant-sonar-scanner") {
+           sh ' sonar-scanner'
+         }
+        }
+
+       }
+
      }
-     stage('login & push to hub') {
+     stage("login & push to hub") {
         steps {
          script {
-          docker.withRegistry('https://index.docker.io/v1/','dockerhub-cred-id') { 
+          docker.withRegistry("https://index.docker.io/v1/","dockerhub-cred-id") { 
              
            def image = docker.image("shrikant155/python-web-app:${BUILD_NUMBER}")
            image.push()
