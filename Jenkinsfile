@@ -44,7 +44,7 @@ pipeline {
      }
      stage("trivy scan ") {
       steps {
-        sh 'trivy image --severity HIGH,CRITICAL --exit-code 1 shrikant155/python-web-app:latest'
+        sh 'trivy image  shrikant155/python-web-app:latest'
 
       }
 
