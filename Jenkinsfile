@@ -14,8 +14,11 @@ pipeline {
       }
      stage("build") {
        steps {
-        sh 'docker build -t python-web-app .'   
-     }
+        sh '''
+           docker rmi -f python-web-app || true 
+           docker build -t python-web-app .   
+           '''   
+             }
      }
      stage("push-img-to-hub") {
        steps {
