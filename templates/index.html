@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DevOps Login & DB Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 300px; text-align: center; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; }
+        button:hover { background-color: #218838; }
+        .alert { color: red; font-size: 14px; margin-bottom: 10px; }
+        .success { color: green; font-size: 14px; margin-bottom: 10px; }
+        ul { text-align: left; padding-left: 20px; max-height: 100px; overflow-y: auto; background: #f9f9f9; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Portal 🐳</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="Enter Username" required>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            <button type="submit">Sign Up / Save</button>
+        </form>
+
+        <h3>Registered Users in DB:</h3>
+        <ul>
+            {% if users %}
+                {% for user in users %}
+                    <li>{{ user[0] }}</li>
+                {% endfor %}
+            {% else %}
+                <li>No users yet.</li>
+            {% endif %}
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+services:
+  web-app:
+    build: .
+    image: py-web-app
+    container_name: py-app-container
+    ports:
+     - "5000:5000"
+
+
+    restart: always 
