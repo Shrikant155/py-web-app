@@ -15,27 +15,12 @@ pipeline {
      stage("build") {
        steps {
         sh '''
-           docker rmi -f python-web-app || true 
-           docker build -t python-web-app .   
+           docker rmi -f shrikant155/python-web-app || true 
+           docker build -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
            '''   
              }
      }
-     stage("push-img-to-hub") {
-       steps {
-         script {
-           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-cred-id') {
-           def app = docker.build("shrikant155/python-web-app:${BUILD_NUMBER}")
-           app.push()
-           app.push('latest')
-           }
-         } 
-
-        }
-
-   }  
-
-
- }
+          
 post {
   success {
    echo ' buildand fetch success"
