@@ -25,7 +25,7 @@ pipeline {
          script {
           docker.withRegistry('https://index.docker.io/v1/','dockerhub-cred-id') { 
              
-           def image = docker.image('shrikant155/python-web-app:${BUILD_NUMBER}')
+           def image = docker.image("shrikant155/python-web-app:${BUILD_NUMBER}")
            image.push()
            image.push('latest')
            }         
