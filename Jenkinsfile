@@ -20,7 +20,7 @@ pipeline {
            '''   
              }
      }
-          
+}          
 post {
   success {
    echo ' buildand fetch success'
