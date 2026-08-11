@@ -7,19 +7,9 @@ pipeline {
      
      stage("code-fetch-git") {
        steps {
-         git branch: 'main' ,
          credentialsId: 'github-cred-id' ,
-         url: 'https://github.com/Shrikant155/py-web-app.git'
        }   
       }
-     stage("build") {
-       steps {
-        sh '''
-           docker rmi -f shrikant155/python-web-app || true 
-           docker build -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
-           '''   
-             }
-     } 
      
      stage("sast-scan"){
        steps {
@@ -32,6 +22,25 @@ pipeline {
        }
 
      }
+      stage("quality-gate") {
+        steps {
+          timeout(time: 5, unit: 'MINUTES') {
+             waitForQualityGate abortPipeline: true
+          }
+
+        }  
+     
+
+      }
+          stage("build") {
+       steps {
+        sh '''
+           docker rmi -f shrikant155/python-web-app || true 
+           docker build -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
+           '''   
+             }
+     } 
+
      stage("login & push to hub") {
         steps {
          script {
