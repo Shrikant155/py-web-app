@@ -7,7 +7,9 @@ pipeline {
      
      stage("code-fetch-git") {
        steps {
+         git branch: 'main',
          credentialsId: 'github-cred-id' ,
+         url: 'https://github.com/Shrikant155/py-web-app.git'
        }   
       }
      
@@ -32,7 +34,7 @@ pipeline {
      
 
       }
-          stage("build") {
+     stage("build") {
        steps {
         sh '''
            docker rmi -f shrikant155/python-web-app || true 
