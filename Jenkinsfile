@@ -16,8 +16,27 @@ pipeline {
        steps {
         sh 'docker build -t python-web-app .'   
      }
-     }  
+     }
+     stage("push-img-to-hub") {
+       steps {
+         script {
+           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-cred-id') {
+           def app = docker.build("shrikant155/python-web-app:${BUILD_NUMBER}")
+           app.push()
+           app.push('latest')
+           }
+         } 
+
+        }
+
+   }  
 
 
  }
+post {
+  always {
+   sh 'docker system prune -f'
+  }
+}
+
 }
