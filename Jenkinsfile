@@ -38,7 +38,7 @@ pipeline {
            withCredentials([
         string(credentialsId: 'aws-cred-id', variable: 'AWS_ACCESS_KEY_ID'),
         string(credentialsId: 'aws-secret-cred-id', variable: 'AWS_SECRET_ACCESS_KEY')
-      ]) 
+      ]) {
           sh '''
              terraform init 
               /home/shrikant-devops/.local/bin/checkov -d .
@@ -46,6 +46,7 @@ pipeline {
              '''
          }
        }
+        }
 
      }
      stage("iac-plan-apply") {
