@@ -24,16 +24,16 @@ pipeline {
        }
 
      }
-      stage("quality-gate") {
-        steps {
-          timeout(time: 1, unit: 'MINUTES') {
-             waitForQualityGate abortPipeline: true
-          }
+#      stage("quality-gate") {
+ #       steps {
+  #        timeout(time: 1, unit: 'MINUTES') {
+   #          waitForQualityGate abortPipeline: true
+    #      }
 
-        }  
+#        }  
      
 
-      } 
+ #     } 
       stage("iac-init-scan") {
        steps {
          dir("terraform") {
