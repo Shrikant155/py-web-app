@@ -94,7 +94,7 @@ pipeline {
         steps {
          sh '''
             aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO} 
-            docker tag -t shrikant155/python-web-app:${BUILD_NUMBER} ${ECR_REPO}:${BULD_NUMBER}
+            docker tag  shrikant155/python-web-app:${BUILD_NUMBER} ${ECR_REPO}:${BULD_NUMBER}
             docker push ${ECR_REPO}:${BUILD_NUMBER}
             '''
         }
