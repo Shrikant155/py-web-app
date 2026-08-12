@@ -99,14 +99,27 @@ pipeline {
             '''
         }
       }
-     stage('deploy-on-host') {
+/*     stage('deploy-on-host') {
        steps {
          sh '''
              docker run -d -p 5000:5000 shrikant155/python-web-app:latest
            '''
        }
-     }
-}          
+     } */
+
+      stage("deploy-from-ecr") {
+         steps {
+          sh '''
+             aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO}
+             docker pull ${ECR_REPO}:${BUILD_NUMBER}
+             docker stop python-web-app || true
+             docker rm python-web-app || true
+             docker run -d --name python-web-app -p 5000:5000 ${ECR_REPO}:${BUILD_NUMBER}
+             '''
+         }  
+      }
+   }
+              
 post {
   success {
    echo ' buildand fetch success'
