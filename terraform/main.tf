@@ -12,6 +12,17 @@ provider "aws" {
 data "http" "my_ip" {
 url = "https://checkip.amazonaws.com"
 }
+resource "aws_ecr_repository" "py_web_app" {
+  name = "python-web-app"
+  image_tag_mutability = "IMMUTABLE" # not add duplicat tag
+  force_delete = false # not delete img when terra destroy
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+output "ecr_url" {
+  value = aws_ecr_repository.py_web_app.repository_url
+}
 resource "aws_iam_role" "shrik_role" {
   assume_role_policy = jsonencode(
     {

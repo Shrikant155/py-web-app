@@ -3,6 +3,7 @@ pipeline {
   environment {
    AWS_ACCESS_KEY_ID=credentials('aws-cred-id')
   AWS_SECRET_ACCESS_KEY=credentials('aws-secret-cred-id')
+   AWS_REGION =  'eu-north-1'  
  } 
   stages {
      
@@ -53,7 +54,11 @@ pipeline {
               terraform plan -out=tfplan 
               terraform apply --auto-approve  tfplan
               '''
-         }
+               script {
+                 env.ECR_REPO = sh(script: "terraform output -raw ecr_repo_url",returnStdout: true).trim()
+
+               }
+            }
 
        }
      }
@@ -73,18 +78,27 @@ pipeline {
 
      } 
 
-     stage("login & push to hub") {
+#     stage("login & push to hub") {
+#        steps {
+#         script {
+#          docker.withRegistry("https://index.docker.io/v1/","dockerhub-cred-id") { 
+#             
+#           def image = docker.image("shrikant155/python-web-app:${BUILD_NUMBER}")
+#           image.push()
+#           
+#           }         
+#         }
+#        }
+#     }
+      stage("push-to-ecr") {
         steps {
-         script {
-          docker.withRegistry("https://index.docker.io/v1/","dockerhub-cred-id") { 
-             
-           def image = docker.image("shrikant155/python-web-app:${BUILD_NUMBER}")
-           image.push()
-           
-           }         
-         }
+         sh '''
+            aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO} 
+            docker tag -t shrikant155/python-web-app:${BUILD_NUMBER} ${ECR_REPO}:${BULD_NUMBER}
+            docker push ${ECR_REPO}:${BUILD_NUMBER}
+            '''
         }
-     }
+      }
      stage('deploy-on-host') {
        steps {
          sh '''
