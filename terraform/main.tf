@@ -34,7 +34,7 @@ resource "aws_iam_policy" "shrik_policy" {
       {
         Effect = "Allow"
         Action = ["s3:GetObject","s3:ListBucket"]
-        resource = "*"
+        resources = "*"
       }
     ]
   })
@@ -91,7 +91,7 @@ ami           = "ami-05d62b9bc5a6ca605"
   tags = {
     Name = "shrik-server-1"
   }
-  vpc_security_group_ids = ["aws_security_group.shrik_sg"]
+  vpc_security_group_ids = [aws_security_group.shrik_sg.id]
 monitoring = true
 metadata_options {
   http_endpoint = "enabled"
