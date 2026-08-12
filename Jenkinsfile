@@ -34,7 +34,7 @@ pipeline {
              }
        }   }
       }
-      stage("iac-init-scan") {
+/*      stage("iac-init-scan") {
        steps {
          dir("terraform") {
           sh '''
@@ -44,7 +44,7 @@ pipeline {
              '''
            }
         }
-       }
+       } */
 
      
      stage("iac-plan-apply") {
