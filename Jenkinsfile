@@ -55,7 +55,7 @@ pipeline {
               terraform apply --auto-approve  tfplan
               '''
                script {
-                 env.ECR_REPO = sh(script: "terraform output -raw ecr_repo_url",returnStdout: true).trim()
+                 env.ECR_REPO = sh(script: "terraform output -raw ecr_url",returnStdout: true).trim()
 
                }
             }
