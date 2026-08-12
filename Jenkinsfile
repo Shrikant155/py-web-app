@@ -85,6 +85,13 @@ pipeline {
          }
         }
      }
+     stage('deploy-on-host') {
+       steps {
+         sh '''
+             docker run -d -p 5000:5000 shrikant155/python-web-app:latest
+           '''
+       }
+     }
 }          
 post {
   success {
