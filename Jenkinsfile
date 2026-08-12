@@ -1,8 +1,9 @@
 pipeline {
   agent any
-  triggers {
-  pollSCM('H/5 * * * *')
-  } 
+  environment {
+   AWS_ACCESS_KEY_ID=credentials('aws-cred-id')
+  AWS_SECRET_ACCESS_KEY=credentials('aws-secret-cred-id')
+ } 
   stages {
      
      stage("code-fetch-git") {
@@ -35,20 +36,16 @@ pipeline {
       stage("iac-init-scan") {
        steps {
          dir("terraform") {
-           withCredentials([
-        string(credentialsId: 'aws-cred-id', variable: 'AWS_ACCESS_KEY_ID'),
-        string(credentialsId: 'aws-secret-cred-id', variable: 'AWS_SECRET_ACCESS_KEY')
-      ]) {
           sh '''
              terraform init 
               /home/shrikant-devops/.local/bin/checkov -d .
             
              '''
-         }
-       }
+           }
         }
+       }
 
-     }
+     
      stage("iac-plan-apply") {
        steps {
          dir("terraform") {
