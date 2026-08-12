@@ -37,8 +37,8 @@ pipeline {
          dir("terraform") {
           sh '''
              terraform init 
-             checkov -d .
-
+              /home/shrikant-devops/.local/bin/checkov -d .
+            
              '''
          }
        }
