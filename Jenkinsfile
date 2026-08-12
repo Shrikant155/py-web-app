@@ -29,8 +29,8 @@ pipeline {
          catchError(buildResult: 'SUCCESS',stageResult: 'UNSTABLE' ) {
             timeout(time: 1, unit: 'MINUTES') {
              waitForQualityGate abortPipeline: false
-         }
-       }
+             }
+       }   }
       }
       stage("iac-init-scan") {
        steps {
