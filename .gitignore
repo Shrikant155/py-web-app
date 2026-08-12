@@ -1,0 +1,17 @@
+# Local .terraform directories (plugins and modules)
+.terraform/
+
+# Terraform state files (keep state local or in remote backend, never in Git)
+*.tfstate
+*.tfstate.*
+
+# Sensitive variable files (contain passwords, keys, or secrets)
+*.tfvars
+*.tfvars.json
+
+# Temporary plan files
+tfplan
+*.tfplan
+
+# Crash logs
+crash.log

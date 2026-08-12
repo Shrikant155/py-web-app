@@ -33,7 +33,30 @@ pipeline {
         }  
      
 
-      }
+      } 
+      stage("iac-init-scan") {
+       steps {
+         dir("terraform") {
+          sh '''
+             terraform init 
+             checkov -d .
+
+             '''
+         }
+       }
+
+     }
+     stage("iac-plan-apply") {
+       steps {
+         dir("terraform") {
+           sh '''
+              terraform plan -out=tfplan 
+              terraform apply --auto-approve  tfplan
+              '''
+         }
+
+       }
+     }
      stage("build") {
        steps {
         sh '''
