@@ -35,7 +35,7 @@ resource "aws_iam_policy" "shrik_policy" {
       {
         Effect = "Allow"
         Action = ["s3:GetObject","s3:ListBucket"]
-        resources = ["*"]
+        Resource = ["*"]
       }
     ]
   })
