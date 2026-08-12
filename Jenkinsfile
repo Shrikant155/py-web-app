@@ -78,18 +78,18 @@ pipeline {
 
      } 
 
-#     stage("login & push to hub") {
-#        steps {
-#         script {
-#          docker.withRegistry("https://index.docker.io/v1/","dockerhub-cred-id") { 
-#             
-#           def image = docker.image("shrikant155/python-web-app:${BUILD_NUMBER}")
-#           image.push()
-#           
-#           }         
-#         }
-#        }
-#     }
+/*     stage("login & push to hub") {
+        steps {
+         script {
+          docker.withRegistry("https://index.docker.io/v1/","dockerhub-cred-id") { 
+             
+           def image = docker.image("shrikant155/python-web-app:${BUILD_NUMBER}")
+           image.push()
+           
+           }         
+         }
+        }
+     }*/
       stage("push-to-ecr") {
         steps {
          sh '''
