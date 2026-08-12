@@ -60,14 +60,14 @@ pipeline {
      stage("build") {
        steps {
         sh '''
-           docker rmi -f shrikant155/python-web-app || true 
-           docker build --no-cache -t shrikant155/python-web-app:${BUILD_NUMBER} -t shrikant155/python-web-app:latest .   
+           docker rmi -f shrikant155/python-web-app:${BUILD_NUMBER} || true 
+           docker build --no-cache -t shrikant155/python-web-app:${BUILD_NUMBER}  .   
            '''   
              }
      }
      stage("trivy scan ") {
       steps {
-        sh 'trivy image  shrikant155/python-web-app:latest'
+        sh 'trivy image  shrikant155/python-web-app:${BUILD_NUMBER}'
 
       }
 
@@ -80,7 +80,7 @@ pipeline {
              
            def image = docker.image("shrikant155/python-web-app:${BUILD_NUMBER}")
            image.push()
-           image.push('latest')
+           
            }         
          }
         }
