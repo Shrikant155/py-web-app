@@ -37,7 +37,8 @@ pipeline {
       stage("iac-init-scan") {
        steps {
          dir("terraform") {
-          sh '''
+          sh ''' 
+             terraform destroy --auto-approve
              terraform init 
               /home/shrikant-devops/.local/bin/checkov -d .
             
