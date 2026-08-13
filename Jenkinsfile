@@ -62,7 +62,7 @@ pipeline {
 
        }
      }
-     stage("build") {
+     stage("scan-and-build") {
        steps {
         sh '''
            /home/shrikant-devops/.local/bin/checkov -d . -f Dockerfile --quiet 
