@@ -39,7 +39,7 @@ pipeline {
          dir("terraform") {
           sh ''' 
             
-             terraform init
+             echo "yes" |  terraform init -migrate-state
                
               /home/shrikant-devops/.local/bin/checkov -d .
             
