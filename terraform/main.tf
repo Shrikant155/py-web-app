@@ -9,6 +9,13 @@ terraform {
 provider "aws" {
   region = "eu-north-1"
 }
+terraform {
+  backend "s3" {
+    bucket = "shrik-terraform-bucket"
+    key = "python-web-app/terraform.tfstate"
+    region = "eu-north-1"
+  }
+}
 data "http" "my_ip" {
 url = "https://checkip.amazonaws.com"
 }

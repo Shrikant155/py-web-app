@@ -38,8 +38,9 @@ pipeline {
        steps {
          dir("terraform") {
           sh ''' 
-             terraform destroy --auto-approve
-             terraform init 
+            
+             terraform init
+               
               /home/shrikant-devops/.local/bin/checkov -d .
             
              '''
