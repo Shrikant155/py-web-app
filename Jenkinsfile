@@ -34,7 +34,7 @@ pipeline {
              }
        }   }
       }
-/*      stage("iac-init-scan") {
+      stage("iac-init-scan") {
        steps {
          dir("terraform") {
           sh '''
@@ -44,7 +44,7 @@ pipeline {
              '''
            }
         }
-       } */
+       } 
 
      
      stage("iac-plan-apply") {
@@ -65,9 +65,14 @@ pipeline {
      stage("build") {
        steps {
         sh '''
+           /home/shrikant-devops/.local/bin/checkov -d . -f Dockerfile --quiet 
+
+
            docker rmi -f shrikant155/python-web-app:${BUILD_NUMBER} || true 
            docker build --no-cache -t shrikant155/python-web-app:${BUILD_NUMBER}  .   
-           '''   
+         
+
+             '''   
              }
      }
      stage("trivy scan ") {
