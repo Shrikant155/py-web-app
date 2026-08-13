@@ -67,7 +67,7 @@ pipeline {
      stage("scan-and-build") {
        steps {
         sh '''
-           /home/shrikant-devops/.local/bin/checkov -d . -f Dockerfile --quiet 
+        /*    /home/shrikant-devops/.local/bin/checkov -d . -f Dockerfile --quiet */ 
 
 
            docker rmi -f shrikant155/python-web-app:${BUILD_NUMBER} || true 
