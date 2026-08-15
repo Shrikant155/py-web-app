@@ -68,8 +68,8 @@ pipeline {
        steps {
         sh '''
          
-
-
+            checkov -f Dockerfile --quiet
+           
            docker rmi -f shrikant155/python-web-app:${BUILD_NUMBER} || true 
            docker build --no-cache -t shrikant155/python-web-app:${BUILD_NUMBER}  .   
          
@@ -130,7 +130,14 @@ pipeline {
               
 post {
   success {
-   echo ' buildand fetch success'
+     mail to: "shrikantdevops999@gmail.com",
+          subject: "job done successful:${JOB_NAME}" ,
+          body: """
+                 job successful.
+                 job-name: ${JOB_NAME}
+                 build-number: ${BUILD_NUMBER}
+                  url:${BUILD_URL}
+                  """
   }
   failure {
    echo 'somthing is failed'
