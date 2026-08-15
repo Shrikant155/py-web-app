@@ -68,7 +68,7 @@ pipeline {
        steps {
         sh '''
          
-            checkov -f Dockerfile --quiet
+           /home/shrikant-devops/.local/bin/checkov -f Dockerfile --quiet
            
            docker rmi -f shrikant155/python-web-app:${BUILD_NUMBER} || true 
            docker build --no-cache -t shrikant155/python-web-app:${BUILD_NUMBER}  .   
