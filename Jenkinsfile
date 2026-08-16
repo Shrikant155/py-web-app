@@ -118,11 +118,17 @@ pipeline {
          steps {
           sh '''
              aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO}
-             docker stop python-web-app || true
-             docker rm python-web-app || true
-               docker pull ${ECR_REPO}:${BUILD_NUMBER}
+             #docker stop python-web-app || true
+             #docker rm python-web-app || true
+             docker pull ${ECR_REPO}:${BUILD_NUMBER}
              
-             docker run -d --name python-web-app -p 5000:5000 ${ECR_REPO}:${BUILD_NUMBER}
+             #docker run -d --name python-web-app -p 5000:5000 ${ECR_REPO}:${BUILD_NUMBER}
+             minikube start --driver=docker
+             minikube image load ${ECR_REPO}:${BUILD_NUMBER}
+             sed -i "s/__IMAGE_NAME__/${ECR_REPO}:${BUILD_NUMBER}/g" deployment.yml
+             kubectl apply -f deployment.yml
+             kubectl apply -f service.yml
+             minikube service  py-k8s-app-service
              '''
          }  
       }

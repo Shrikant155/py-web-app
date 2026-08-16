@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-k8s-app-deployment
+
+spec:
+  replicas: 2
+  selector:
+   matchLabels:
+     app: py-k8s-app
+  template:
+    metadata:
+     labels:
+       app: py-k8s-app
+    spec:
+      containers:
+       - name: py-k8s-app
+         image: __IMAGE_NAME__
+         imagePullPolicy: Never
+         ports:
+          - containerPort: 5000
+      
