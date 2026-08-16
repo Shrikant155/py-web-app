@@ -13,6 +13,8 @@ spec:
      labels:
        app: py-k8s-app
     spec:
+      imagePullSecrets:
+        - name: ecr-secret
       containers:
        - name: py-k8s-app
          image: __IMAGE_NAME__
