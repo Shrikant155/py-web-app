@@ -128,7 +128,7 @@ pipeline {
              #minikube image load ${ECR_REPO}:${BUILD_NUMBER}
              
  kubectl create secret docker-registry ecr-secret \
-    --docker-server=${ECR_REPO} \
+    --docker-server=${ECR_REPO}:${BUILD_NUMBER} \
     --docker-username=AWS \
     --docker-password=$(aws ecr get-login-password --region eu-north-1) \
     --namespace=default \
