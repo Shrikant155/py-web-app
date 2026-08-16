@@ -125,7 +125,7 @@ pipeline {
              #docker run -d --name python-web-app -p 5000:5000 ${ECR_REPO}:${BUILD_NUMBER}
              minikube start --driver=docker
              minikube image load ${ECR_REPO}:${BUILD_NUMBER}
-             sed -i "s/__IMAGE_NAME__/${ECR_REPO}:${BUILD_NUMBER}/g" deployment.yml
+             sed -i "s|__IMAGE_NAME__|${ECR_REPO}:${BUILD_NUMBER}|g" deployment.yml
              kubectl apply -f deployment.yml
              kubectl apply -f service.yml
              minikube service  py-k8s-app-service
